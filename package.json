@@ -5,6 +5,7 @@
   "main": "scrapper.js",
   "dependencies": {
     "cheerio": "^1.0.0-rc.9",
+    "htmlparser2": "^6.1.0",
     "puppeteer": "^10.0.0"
   },
   "devDependencies": {},

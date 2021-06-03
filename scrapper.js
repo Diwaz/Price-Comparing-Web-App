@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
-const $ = require('cheerio');
+const cheerio = require('cheerio');
+const htp = require('htmlparser2');
 
 
 async function configureBrower() {
@@ -15,6 +16,8 @@ async function checkPrice(page) {
     await page.keyboard.press('Enter');
     await page.waitForSelector('.c2prKC', { timeout: 10000 });
     let html = await page.evaluate(() => document.body.innerHTML);
+
+    let $ = cheerio.load(html);
     $('.c16H9d', html).each(function() {
             let prodName = $(this).text();
             console.log(prodName);
