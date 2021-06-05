@@ -28,7 +28,12 @@ async function checkPrice(page) {
         let prodPrice = $(this).text();
         prices.push(prodPrice);
     });
-    console.log(names[0], prices[0]);
+    const nameparse = naam => {
+        if (naam.length > 10) {
+            return naam.split(' ').slice(0, 5).join(" ");
+        }
+    }
+    console.log(nameparse(names[0]) + '...', prices[0]);
 
     // const [el1] = await page.$x('//*[@id="root"]/div/div[2]/div[1]/div/div[1]/div[2]/div[1]/div/div/div[2]/div[2]/a');
     // const text1 = await el1.getProperty('textContent');
