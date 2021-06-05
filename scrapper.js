@@ -18,22 +18,38 @@ async function checkPrice(page) {
     let html = await page.evaluate(() => document.body.innerHTML);
 
     let $ = cheerio.load(html);
+    const names = []
+    const prices = []
     $('.c16H9d', html).each(function() {
-            let prodName = $(this).text();
-            console.log(prodName);
-        })
-        // const [el1] = await page.$x('//*[@id="root"]/div/div[2]/div[1]/div/div[1]/div[2]/div[1]/div/div/div[2]/div[2]/a');
-        // const text1 = await el1.getProperty('textContent');
-        // const name = await text1.jsonValue();
-        // const [el] = await page.$x('//*[@id="root"]/div/div[2]/div[1]/div/div[1]/div[2]/div[1]/div/div/div[2]/div[3]/span');
-        // const text2 = await el.getProperty('textContent');
-        // const price = await text2.jsonValue();
-        // console.log(name, price)
+        let prodName = $(this).text();
+        names.push(prodName);
+    });
+    $('.c3gUW0', html).each(function() {
+        let prodPrice = $(this).text();
+        prices.push(prodPrice);
+    });
+    console.log(names[0], prices[0]);
+
+    // const [el1] = await page.$x('//*[@id="root"]/div/div[2]/div[1]/div/div[1]/div[2]/div[1]/div/div/div[2]/div[2]/a');
+    // const text1 = await el1.getProperty('textContent');
+    // const name = await text1.jsonValue();
+    // const [el] = await page.$x('//*[@id="root"]/div/div[2]/div[1]/div/div[1]/div[2]/div[1]/div/div/div[2]/div[3]/span');
+    // const text2 = await el.getProperty('textContent');
+    // const price = await text2.jsonValue();
+    // console.log(name, price)
+    // return {
+    //     prodName,
+    //     prodPrice
+    // }
 }
 
 async function monitor() {
     let page = await configureBrower();
-    await checkPrice(page);
+    let datas = await checkPrice(page);
+    // names = datas.prodName;
+    // price = datas.prodPrice;
+    // console.log(names, price);
+
 }
 monitor();
 
