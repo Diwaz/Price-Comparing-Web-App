@@ -1,18 +1,18 @@
 const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
-const htp = require('htmlparser2');
+
 
 
 async function configureBrower() {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto('https://www.daraz.com.np/');
-    return page;
+    return { page, browser };
 }
 
 async function checkPrice(page) {
     await page.click('[name=q]');
-    await page.keyboard.type("Mask");
+    await page.keyboard.type("Sanitizer");
     await page.keyboard.press('Enter');
     await page.waitForSelector('.c2prKC', { timeout: 10000 });
     let html = await page.evaluate(() => document.body.innerHTML);
@@ -32,8 +32,12 @@ async function checkPrice(page) {
         if (naam.length > 10) {
             return naam.split(' ').slice(0, 5).join(" ");
         }
+        return naam;
     }
-    console.log(nameparse(names[0]) + '...', prices[0]);
+    for (i = 0; i < 5; i++) {
+        console.log(nameparse(names[i]) + '...', prices[i]);
+    }
+
 
     // const [el1] = await page.$x('//*[@id="root"]/div/div[2]/div[1]/div/div[1]/div[2]/div[1]/div/div/div[2]/div[2]/a');
     // const text1 = await el1.getProperty('textContent');
@@ -49,8 +53,18 @@ async function checkPrice(page) {
 }
 
 async function monitor() {
-    let page = await configureBrower();
-    let datas = await checkPrice(page);
+    let { browser } = await configureBrower();
+    try {
+        let { page } = await configureBrower();
+        await checkPrice(page);
+
+    } catch {
+        console.log('error')
+    } finally {
+        await browser.close()
+    }
+
+
     // names = datas.prodName;
     // price = datas.prodPrice;
     // console.log(names, price);
