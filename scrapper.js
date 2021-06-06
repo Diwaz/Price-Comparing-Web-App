@@ -34,8 +34,18 @@ async function checkPrice(page) {
         }
         return naam;
     }
-    for (i = 0; i < 5; i++) {
-        console.log(nameparse(names[i]) + '...', prices[i]);
+    const looper = names.map(n => {
+            if (n.length > 10) {
+                return n.split(' ').slice(0, 5).join(" ");
+            }
+            return n;
+        })
+        // for (i = 0; i < 5; i++) {
+        //     console.log(nameparse(names[i]) + '...', prices[i]);
+        // }
+    return {
+        prices,
+        names
     }
 
 
@@ -56,7 +66,35 @@ async function monitor() {
     let { browser } = await configureBrower();
     try {
         let { page } = await configureBrower();
-        await checkPrice(page);
+        const bundle = await checkPrice(page);
+        const total = (bundle.names).length;
+
+        console.log(total);
+        // //  var ran = bundle.names[3];
+        // //  var pan = bundle.prices[3];
+        // //  console.log(ran, pan)
+        //      var namesJ = {
+        //          productName: '',
+        //          productPrice: ''
+        //      }
+        //      for (i = 0; i < total; i++) {
+
+
+        //          namesJ[i].productName= bundle.names[i],
+        //          namesJ[i].productPrice= bundle.prices[i]
+        //      }
+
+
+
+        // const mainData = JSON.stringify(nameJ);
+        // console.log(mainData);
+        var package = [];
+        for (i = 0; i < total; i++) {
+            package.push(bundle.names[i]);
+            package.push(bundle.prices[i]);
+        }
+        const mainData = JSON.stringify(package);
+        console.log(mainData);
 
     } catch {
         console.log('error')
