@@ -5,14 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script>
-        var product = document.getElementById('Prod').value;
-        const datas = document.getElementsByClassName('hid').innerHTML = 'hello';
-
-        function searched() {
-            datas.innerHTML = product;
-        }
-    </script>
+    <script src="indexx.js"></script>
     <title>Compare price</title>
 </head>
 
@@ -22,7 +15,7 @@
         <div class="method">
             Products<input type="text" id='Prod'>
             <button onclick="searched()">Submit</button>
-            <h1 class="hid"> </h1>
+            <h1 id="hid"></h1>
         </div>
     </div>
 
