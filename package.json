@@ -4,6 +4,7 @@
     "description": "price tacking website ",
     "main": "scrapper.js",
     "dependencies": {
+        "body-parser": "^1.19.0",
         "cheerio": "^1.0.0-rc.9",
         "express": "^4.17.1",
         "htmlparser2": "^6.1.0",
