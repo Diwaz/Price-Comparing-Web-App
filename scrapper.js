@@ -57,16 +57,57 @@ async function monitor() {
 
 
     var keys = [
-        'id',
         'name',
         'price'
     ]
-    const mainData = {
+    const arr = [
+        '0',
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        '10'
+    ]
 
-    }
 
-    console.log(bundle.names)
-    console.log(bundle.prices)
+    arr.forEach((index, item) => {
+        let l = 0;
+        const mainData = {
+
+        }
+        mainData[keys[l]] = bundle.names[index]
+        l++
+        mainData[keys[l]] = bundle.prices[index]
+        l++
+        console.log(mainData);
+    });
+
+
+
+
+
+
+    // for (i = 0; i < 10; i++) {
+    //     let keyIdx = 0;
+    //     for (j = 0; j < 2; j++) {
+    //         if (l < 2) {
+    //             mainData[keys[j]] = bundle.names[l];
+    //             // keyIdx++;
+    //             j++;
+    //             mainData[keys[j]] = bundle.prices[l];
+    //         }
+
+
+    //     }
+    //     l++;
+
+    // }
+
 
 
 }
