@@ -7,7 +7,7 @@ const scrapper = require('./scrapper');
 const app = express();
 app.get('/data', (req, res) => {
     // res.sendFile(path.join(__dirname, 'index.html'));
-    res.json(scrapper.data);
+    res.send(scrapper.scrapeData('sanitizer'));
 });
 
 app.listen(8080);
