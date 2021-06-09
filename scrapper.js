@@ -1,175 +1,73 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
+const puppeteer = require('puppeteer');
 const { next } = require('cheerio/lib/api/traversing');
 
 
-async function getData() {
-    try {
-        const siteUrl = 'https://www.daraz.com.np/catalog/?q=mask';
-        const { data } = await axios({
-            method: 'GET',
-            url: siteUrl,
-        })
+
+
+async function configureBrower() {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto('https://www.daraz.com.np/', {
+        waitUntil: 'load',
+        timeout: 0
+    })
+    return page;
+};
 
 
 
-        const eSelector = '#root > div > div.ant-row.c10-Cg > div.ant-col-24 > div > div.ant-col-20.ant-col-push-4.c1z9Ut > div.c1_t2i > div:nth-child(1)';
+async function checkPrice(page) {
+    await page.click('[name=q]');
+    await page.keyboard.type('sanitizer');
+    await page.keyboard.press('Enter');
+    await page.waitForSelector('.c2prKC', { timeout: 10000 });
+    let html = await page.evaluate(() => document.body.innerHTML);
 
-        const $ = cheerio.load(data)
-        console.log($(eSelector).text());
-        $(eSelector).each((parentIdx, parentElem) => {
-            console.log(parentIdx);
-            // if (parentIdx > 10) {
-            //     $(parentElem).children().each((childIdx, childElem) => {
-            //         console.log($(childElem).text());
-            //     })
-            // }
-        })
-    } catch (err) {
-        console.error(err);
+    let $ = cheerio.load(html);
+    const names = []
+    const prices = []
+    $('.c16H9d', html).each(function() {
+        let prodName = $(this).text();
+        names.push(prodName);
+    });
+    $('.c3gUW0', html).each(function() {
+        let prodPrice = $(this).text();
+        prices.push(prodPrice);
+    });
+
+
+    return {
+        names,
+        prices
+
     }
 }
-getData();
 
 
 
+async function monitor() {
+
+
+    let page = await configureBrower();
+    const bundle = await checkPrice(page);
+    const total = (bundle.names).length;
 
 
 
+    var keys = [
+        'id',
+        'name',
+        'price'
+    ]
+    const mainData = {
+
+    }
+
+    console.log(bundle.names)
+    console.log(bundle.prices)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// async function scrapeData(product) {
-//     const browser = await puppeteer.launch();
-//     const page = await browser.newPage();
-//     await page.goto('https://www.daraz.com.np/', {
-//         waitUntil: 'load',
-//         timeout: 0
-//     });
-
-//     //}
-
-//     //async function checkPrice(page) {
-//     await page.click('[name=q]');
-//     await page.keyboard.type(product);
-//     await page.keyboard.press('Enter');
-//     await page.waitForSelector('.c2prKC', { timeout: 1000 });
-//     let html = await page.evaluate(() => document.body.innerHTML);
-
-//     let $ = cheerio.load(html);
-//     const names = []
-//     const prices = []
-//     $('.c16H9d', html).each(function() {
-//         let prodName = $(this).text();
-//         names.push(prodName);
-//     });
-//     $('.c3gUW0', html).each(function() {
-//         let prodPrice = $(this).text();
-//         prices.push(prodPrice);
-//     });
-//     rname = JSON.stringify(names);
-//     rprod = JSON.stringify(prices);
-//     // const nameparse = naam => {
-//     //     if (naam.length > 10) {
-//     //         return naam.split(' ').slice(0, 5).join(" ");
-//     //     }
-//     //     return naam;
-//     // }
-//     // const looper = names.map(n => {
-//     //         if (n.length > 10) {
-//     //             return n.split(' ').slice(0, 5).join(" ");
-//     //         }
-//     //         return n;
-//     //     })
-//     // for (i = 0; i < 5; i++) {
-//     //     console.log(nameparse(names[i]) + '...', prices[i]);
-//     // }
-//     browser.close();
-//     return {
-//         rname,
-//         rprod
-
-//     }
-// }
-
-
-// //}
-
-// //async function monitor() {
-// // let { browser } = await configureBrower();
-// // try {
-// //     let { page } = await configureBrower();
-// //     const bundle = await checkPrice(page);
-// //     const total = (bundle.names).length;
-
-
-// // //  var ran = bundle.names[3];
-// // //  var pan = bundle.prices[3];
-// // //  console.log(ran, pan)
-// //      var namesJ = {
-// //          productName: '',
-// //          productPrice: ''
-// //      }
-// //      for (i = 0; i < total; i++) {
-
-
-// //          namesJ[i].productName= bundle.names[i],
-// //          namesJ[i].productPrice= bundle.prices[i]
-// //      }
-
-
-
-// // const mainData = JSON.stringify(nameJ);
-// // console.log(mainData);
-// //     var package = [];
-// //     for (i = 0; i < total; i++) {
-// //         package.push(bundle.names[i]);
-// //         package.push(bundle.prices[i]);
-// //     }
-// //     const mainData = JSON.stringify(package);
-// //     return mainData;
-
-// // } catch {
-// //     console.log('error')
-// // } finally {
-// //     await browser.close()
-// // }
-// // async function monitor() {
-// //     const data = await scrapeData('sanitizer');
-// //     console.log(data);
-// // }
-// // monitor();
-// module.exports = {
-//     scrapeData
-// }
+}
+monitor();
