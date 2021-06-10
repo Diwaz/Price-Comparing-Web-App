@@ -52,61 +52,61 @@ async function monitor() {
 
     let page = await configureBrower();
     const bundle = await checkPrice(page);
-    const total = (bundle.names).length;
+    const nameData = bundle.names;
+    const newPrice = bundle.prices;
 
+    const result = await nameData.map((prodName, index) => {
 
-
-    var keys = [
-        'name',
-        'price'
-    ]
-    const arr = [
-        '0',
-        '1',
-        '2',
-        '3',
-        '4',
-        '5',
-        '6',
-        '7',
-        '8',
-        '9',
-        '10'
-    ]
-
-
-    arr.forEach((index, item) => {
-        let l = 0;
-        const mainData = {
-
+        return {
+            id: index,
+            prodName,
+            prodPrice: parseInt(newPrice[index])
         }
-        mainData[keys[l]] = bundle.names[index]
-        l++
-        mainData[keys[l]] = bundle.prices[index]
-        l++
-        console.log(mainData);
+
+
     });
+    console.log(result);
+
+    // var keys = [
+    //     'id',
+    //     'name',
+    //     'price'
+    // ]
+    // const arr = [
+    //     '0',
+    //     '1',
+    //     '2',
+    //     '3',
+    //     '4',
+    //     '5',
+    //     '6',
+    //     '7',
+    //     '8',
+    //     '9',
+    //     '10'
+    // ]
 
 
-
-
-
-
-    // for (i = 0; i < 10; i++) {
-    //     let keyIdx = 0;
-    //     for (j = 0; j < 2; j++) {
-    //         if (l < 2) {
-    //             mainData[keys[j]] = bundle.names[l];
-    //             // keyIdx++;
-    //             j++;
-    //             mainData[keys[j]] = bundle.prices[l];
-    //         }
-
+    // arr.forEach((index, item) => {
+    //     let l = 0;
+    //     const mainData = {
 
     //     }
-    //     l++;
+    //     mainData[keys[l]] = index
+    //     l++
+    //     mainData[keys[l]] = bundle.names[index]
+    //     l++
+    //     mainData[keys[l]] = bundle.prices[index]
+    //     l++
+    //     console.log(mainData);
+    // });
 
-    // }
+
+
+
+
+
+
 
 
 
