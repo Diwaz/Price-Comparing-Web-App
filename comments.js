@@ -87,3 +87,38 @@
    // async function monitor() {
    //     const data = await scrapeData('sanitizer');
    //     console.log(data);
+
+
+   // var keys = [
+   //     'id',
+   //     'name',
+   //     'price'
+   // ]
+   // const arr = [
+   //     '0',
+   //     '1',
+   //     '2',
+   //     '3',
+   //     '4',
+   //     '5',
+   //     '6',
+   //     '7',
+   //     '8',
+   //     '9',
+   //     '10'
+   // ]
+
+
+   // arr.forEach((index, item) => {
+   //     let l = 0;
+   //     const mainData = {
+
+   //     }
+   //     mainData[keys[l]] = index
+   //     l++
+   //     mainData[keys[l]] = bundle.names[index]
+   //     l++
+   //     mainData[keys[l]] = bundle.prices[index]
+   //     l++
+   //     console.log(mainData);
+   // });
