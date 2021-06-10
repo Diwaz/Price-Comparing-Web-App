@@ -38,7 +38,24 @@ async function scrapeData(product) {
             prodPrice: prices[index]
         }
     });
-    console.log(result);
+    return result;
     browser.close()
 }
-scrapeData('mask');
+
+// setting express server
+app = express();
+
+app.get('/data/api', async(req, res) => {
+    try {
+        const prodData = await scrapeData('sanitizer');
+        return res.status(200).json({
+            data: prodData
+        })
+    } catch (err) {
+        return res.status(500).json({
+            err: err.toSring(),
+        })
+    }
+})
+
+app.listen(8080);
