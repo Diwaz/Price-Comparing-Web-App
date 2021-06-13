@@ -1,6 +1,12 @@
 const { response } = require("express");
 
+
+
+
+search.addEventListener('click', getData);
+
 async function getData() {
+    const search = document.getElementById('Prod').value;
     // let header = new Headers({
     //     'Access-Control-Allow-Origin': '*',
     //     'Content-Type': 'multipart/form-data'
@@ -12,7 +18,8 @@ async function getData() {
     // };
     listing = document.getElementById('hid');
     console.log('started')
-    fetch('http://localhost:8080/data/api')
+    console.log(search)
+    fetch(`http://localhost:8080/data/api/${search}`)
         .then(res => res.json())
         .then(resText => {
             let html = '';

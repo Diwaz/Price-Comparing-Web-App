@@ -1,6 +1,7 @@
 const express = require('express');
 const cheerio = require('cheerio');
 const puppeteer = require('puppeteer');
+const bodyParser = require('body-parser');
 
 
 
@@ -42,7 +43,6 @@ async function scrapeData(product) {
         link.push(prodLink);
     });
 
-    console.log(link);
 
     const result = await names.map((prodName, index) => {
 
@@ -58,11 +58,11 @@ async function scrapeData(product) {
     return result;
 
 }
-scrapeData('mask');
 
 
 // setting express server
 app = express();
+
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -70,16 +70,20 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Header', 'Content-Type,Authorization');
     next();
 });
+// app.post('/data/api/:product',async(req,res)=>{
 
-app.get('/data/api', async(req, res) => {
+// })
+app.get(`/data/api/:product`, async(req, res) => {
+    let prod = req.params.product;
+    console.log(prod);
     try {
-        const prodData = await scrapeData('mask');
+        const prodData = await scrapeData(prod);
         return res.status(200).json({
             data: prodData
         })
     } catch (err) {
         return res.status(500).json({
-            err: err.toSring(),
+            err: err,
         })
     }
 })
