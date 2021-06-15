@@ -60,33 +60,62 @@ const axios = require('axios');
 //     return result;
 
 // }
-async function sastoData() {
-    try {
-        const siteUrl = 'https://www.sastodeal.com/catalogsearch/result/?q=mask';
-        const { data } = await axios({
-            method: 'GET',
-            url: siteUrl,
-        })
+async function sastoData(product) {
+    //    
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto('https://www.sastodeal.com/', {
+        waitUntil: 'load',
+        timeout: 0
+    })
+
+    await page.click('[name=q]');
+    await page.keyboard.type(product);
+    await page.keyboard.press('Enter');
+    await page.waitForSelector('.base', { timeout: 20000 });
+    let html = await page.evaluate(() => document.body.innerHTML);
+
+    let $ = cheerio.load(html);
+    const names = []
+    const prices = []
+    const imgUrl = []
+    const link = []
+    $('.product-item-link', html).each(function() {
+        let prodName = $(this).text();
+        names.push(prodName);
+    });
+    console.log(names);
+    // $('.c3gUW0', html).each(function() {
+    //     let prodPrice = $(this).text();
+    //     prices.push(prodPrice);
+    // });
+    // $('.c1ZEkM', html).each(function() {
+
+    //     let prodImg = $(this).attr('src');
+    //     imgUrl.push(prodImg);
+    // });
+    // $('.cRjKsc', html).each(function() {
+
+    //     let prodLink = $(this).find('a').attr('href');
+    //     link.push(prodLink);
+    // });
 
 
-        const $ = cheerio.load(data);
-        const elemSelector = '#amasty-shopby-product-list > div.products.wrapper.grid.products-grid.amscroll-page > ol > li > div > div > strong > a';
+    // const result = await names.map((prodName, index) => {
 
+    //     return {
+    //         id: index,
+    //         prodName,
+    //         prodPrice: prices[index],
+    //         imgUrl: imgUrl[index],
+    //         link: link[index]
+    //     }
+    // });
+    // browser.close();
+    // return result;
 
-        console.log($(elemSelector));
-        $(elemSelector).each((parentIdx, parentElem) => {
-            console.log(parentIdx);
-            // if (parentIdx > 10) {
-            //     $(parentElem).children().each((childIdx, childElem) => {
-            //         console.log($(childElem).text());
-            //     })
-            // }
-        })
-    } catch (err) {
-        console.error(err);
-    }
 }
-sastoData();
+sastoData('mask');
 
 
 // setting express server
