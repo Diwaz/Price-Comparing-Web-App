@@ -122,3 +122,31 @@
    //     l++
    //     console.log(mainData);
    // });
+
+
+
+   try {
+       //         const siteUrl = 'https://www.sastodeal.com/catalogsearch/result/?q=mask';
+       //         const { data } = await axios({
+       //             method: 'GET',
+       //             url: siteUrl,
+       //         })
+
+
+       //         const $ = cheerio.load(data);
+       //         const elemSelector = '#amasty-shopby-product-list > div.products.wrapper.grid.products-grid.amscroll-page > ol > li > div > div > strong > a';
+
+
+       //         console.log($(elemSelector));
+       //         $(elemSelector).each((parentIdx, parentElem) => {
+       //             console.log(parentIdx);
+       //             // if (parentIdx > 10) {
+       //             //     $(parentElem).children().each((childIdx, childElem) => {
+       //             //         console.log($(childElem).text());
+       //             //     })
+       //             // }
+       //         })
+       //     } catch (err) {
+       //         console.error(err);
+       //     }
+       // }

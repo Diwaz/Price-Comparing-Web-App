@@ -72,7 +72,7 @@ async function sastoData(product) {
     await page.click('[name=q]');
     await page.keyboard.type(product);
     await page.keyboard.press('Enter');
-    await page.waitForSelector('.base', { timeout: 20000 });
+    await page.waitForSelector('.main', { timeout: 20000 });
     let html = await page.evaluate(() => document.body.innerHTML);
 
     let $ = cheerio.load(html);
@@ -80,7 +80,7 @@ async function sastoData(product) {
     const prices = []
     const imgUrl = []
     const link = []
-    $('.product-item-link', html).each(function() {
+    $('.product-item-link').each(function() {
         let prodName = $(this).text();
         names.push(prodName);
     });
