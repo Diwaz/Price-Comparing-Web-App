@@ -150,3 +150,71 @@
        //         console.error(err);
        //     }
        // }
+       //        html,
+       // body {
+       //     margin: 0;
+       //     width: 100%;
+       //     height: 150vh;
+       //     font-size: 16px;
+       // }
+
+       // .header {
+       //     display: flex;
+       //     background-color: #FD507E;
+       //     height: 403px;
+       //     width: 100%;
+       // }
+
+       // .controllers {
+       //     background-image: url(Images/newController.png);
+       //     background-repeat: no-repeat;
+       //     position: relative;
+       //     flex: 1;
+       //     flex-shrink: 2;
+       // }
+
+       // .menu-model {
+       //     background-image: url(Images/menu.png);
+       //     background-repeat: no-repeat;
+       //     flex: 1;
+       //     flex-shrink: 1;
+       // }
+
+       // .phone {
+       //     background-image: url(Images/phone.png);
+       //     background-repeat: no-repeat;
+       //     flex: 1;
+       //     flex-shrink: 2;
+       // }
+
+       // .bannertext {
+       //     background-image: url(Images/banner.png);
+       //     background-repeat: no-repeat;
+       //     flex: 1;
+       //     flex-shrink: 2;
+       // }
+
+       // input[type="text" i] {
+       //     left: 460px;
+       //     top: 364px;
+       //     position: absolute;
+       //     height: 70px;
+       //     width: 600px;
+       //     border: none;
+       //     border-radius: 10px;
+       //     box-shadow: 5px 6px 6px rgba(0, 0, 0, 0.16);
+       // }
+       // .searchbar:focus{
+
+       // }
+
+
+       // .fly {
+       //     font-size: 40px;
+       //     z-index: 2;
+       //     left: 498px;
+       //     top: 375px;
+       //     position: absolute;
+       //     color: #9B9B9B;
+       //     font-family: 'Ubuntu Mono', monospace;
+       // }
