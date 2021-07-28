@@ -97,6 +97,10 @@ async function sastoData(product) {
         let prodImg = $(this).attr('src');
         imgUrl.push(prodImg);
     });
+    $('.product-item-link').each(function() {
+        let prodLink = $(this).attr('href');
+        link.push(prodLink);
+    });
 
     // const relateArticle = $('.product .details .product-item-details').map((i, section) => {
     //     let articles = $(section).find('a');
@@ -109,9 +113,7 @@ async function sastoData(product) {
     //     let prodName = $$('.product-item-link')[l];
     //     names.push(prodName);
     // }
-    console.log(names);
-    console.log(prices);
-    console.log(imgUrl);
+
     // const oreo = await page.$$eval('.product-item-link', (options) =>
     //     options.map((option) => option.textContent)
     // );
@@ -137,50 +139,51 @@ async function sastoData(product) {
     // });
 
 
-    // const result = await names.map((prodName, index) => {
+    const result = await names.map((prodName, index) => {
 
-    //     return {
-    //         id: index,
-    //         prodName,
-    //         prodPrice: prices[index],
-    //         imgUrl: imgUrl[index],
-    //         link: link[index]
-    //     }
-    // });
-    // browser.close();
-    // return result;
+        return {
+            id: index,
+            prodName,
+            prodPrice: prices[index],
+            imgUrl: imgUrl[index],
+            link: link[index],
+            site: 'sastoDeal'
+        }
+    });
+    browser.close();
+    return result;
 
 }
-sastoData('gaming headphone');
+// sastoData('gaming headphone');
 
 
 
 // setting express server
-// app = express();
+app = express();
 
 
-// app.use((req, res, next) => {
-//     res.setHeader('Access-Control-Allow-Origin', '*');
-//     res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE');
-//     res.setHeader('Access-Control-Allow-Header', 'Content-Type,Authorization');
-//     next();
-// });
-// // app.post('/data/api/:product',async(req,res)=>{
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE');
+    res.setHeader('Access-Control-Allow-Header', 'Content-Type,Authorization');
+    next();
+});
+// app.post('/data/api/:product',async(req,res)=>{
 
-// // })
-// app.get(`/data/api/:product`, async(req, res) => {
-//     let prod = req.params.product;
-//     console.log(prod);
-//     try {
-//         const prodData = await darazData(prod);
-//         return res.status(200).json({
-//             data: prodData
-//         })
-//     } catch (err) {
-//         return res.status(500).json({
-//             err: err,
-//         })
-//     }
 // })
+app.get(`/data/api/:product`, async(req, res) => {
+    let prod = req.params.product;
+    console.log(prod);
+    try {
+        const prodData = await sastoData(prod);
+        return res.status(200).json({
+            data: prodData
+        })
+    } catch (err) {
+        return res.status(500).json({
+            err: err,
+        })
+    }
+})
 
-// app.listen(8080);
+app.listen(8080);

@@ -31,6 +31,7 @@ async function getData() {
                     <p>${product.id}</p>
                     <p>${product.prodName}</p>
                     <p>${product.prodPrice}</p>
+                    <p>${product.site}</p>
                     </div>
                     </br>
                     `
