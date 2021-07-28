@@ -47,3 +47,18 @@ body {
     width: 200px;
     height: 200px;
 }
+
+.mainContainer {
+    display: flex;
+}
+
+.ldiv {
+    flex: 1;
+    width: 400px;
+    border-right: 1px solid black;
+}
+
+.rdiv {
+    flex: 1;
+    width: 400px;
+}
