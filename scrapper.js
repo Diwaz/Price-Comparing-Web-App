@@ -62,17 +62,20 @@ const axios = require('axios');
 // }
 async function sastoData(product) {
     //    
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+        headless: true
+    });
     const page = await browser.newPage();
-    await page.goto('https://www.sastodeal.com/', {
-        waitUntil: 'load',
-        timeout: 0
-    })
+    const navigationPromise = page.waitForNavigation()
+    await page.goto(`https://www.sastodeal.com/catalogsearch/result/?q=${product}`)
 
-    await page.click('[name=q]');
-    await page.keyboard.type(product);
-    await page.keyboard.press('Enter');
-    await page.waitForSelector('.main', { timeout: 20000 });
+
+    // await page.click('[name=q]');
+    // await page.keyboard.type(product);
+    // await page.keyboard.press('Enter');
+    // await navigationPromise;
+    await page.waitForSelector('.item:nth-child(1) > .product-item-info > .product > .product > .product-item-link')
+        // await page.waitForSelector('.product-item-info', { timeout: 20000 });
     let html = await page.evaluate(() => document.body.innerHTML);
 
     let $ = cheerio.load(html);
@@ -84,7 +87,40 @@ async function sastoData(product) {
         let prodName = $(this).text();
         names.push(prodName);
     });
+    $('.price').each(function() {
+        let prodPrice = $(this).text();
+        let rPrice = prodPrice.split(' ');
+
+        prices.push(rPrice[1]);
+    });
+    $('.product-image-photo').each(function() {
+        let prodImg = $(this).attr('src');
+        imgUrl.push(prodImg);
+    });
+
+    // const relateArticle = $('.product .details .product-item-details').map((i, section) => {
+    //     let articles = $(section).find('a');
+    //     return articles.text().trim();
+    // }).get(0)
+
+    // console.log(relateArticle) //Foo
+
+    // for (let l = 0; l < 5; l++) {
+    //     let prodName = $$('.product-item-link')[l];
+    //     names.push(prodName);
+    // }
     console.log(names);
+    console.log(prices);
+    console.log(imgUrl);
+    // const oreo = await page.$$eval('.product-item-link', (options) =>
+    //     options.map((option) => option.textContent)
+    // );
+    // console.log(oreo);
+
+
+
+
+
     // $('.c3gUW0', html).each(function() {
     //     let prodPrice = $(this).text();
     //     prices.push(prodPrice);
@@ -115,7 +151,8 @@ async function sastoData(product) {
     // return result;
 
 }
-sastoData('mask');
+sastoData('gaming headphone');
+
 
 
 // setting express server
